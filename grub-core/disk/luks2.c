@@ -378,7 +378,7 @@ luks2_scan (grub_disk_t disk, grub_cryptomount_args_t cargs)
 }
 
 static grub_err_t
-luks2_base64_decode (const char *in, grub_size_t inlen, grub_uint8_t *decoded, idx_t *decodedlen)
+luks2_base64_decode (const char *in, grub_size_t inlen, grub_uint8_t *decoded, grub_size_t *decodedlen)
 {
   grub_size_t unescaped_len = 0;
   char *unescaped = NULL;
@@ -401,7 +401,7 @@ luks2_verify_key (grub_luks2_digest_t *d, grub_uint8_t *candidate_key,
 {
   grub_uint8_t candidate_digest[GRUB_CRYPTODISK_MAX_KEYLEN];
   grub_uint8_t digest[GRUB_CRYPTODISK_MAX_KEYLEN], salt[GRUB_CRYPTODISK_MAX_KEYLEN];
-  idx_t saltlen = sizeof (salt), digestlen = sizeof (digest);
+  grub_size_t saltlen = sizeof (salt), digestlen = sizeof (digest);
   const gcry_md_spec_t *hash;
   gcry_err_code_t gcry_ret;
 
@@ -442,7 +442,7 @@ luks2_decrypt_key (grub_uint8_t *out_key,
   grub_uint8_t area_key[GRUB_CRYPTODISK_MAX_KEYLEN];
   grub_uint8_t salt[GRUB_CRYPTODISK_MAX_KEYLEN];
   grub_uint8_t *split_key = NULL;
-  idx_t saltlen = sizeof (salt);
+  grub_size_t saltlen = sizeof (salt);
   char cipher[32], *p;
   const gcry_md_spec_t *hash;
   gcry_err_code_t gcry_ret;
